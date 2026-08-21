@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحدي الإيموجي التقني</title>
+<style>
+*{box-sizing:border-box}
+:root{
+  --panel:#10182a; --text:#f7f9ff; --muted:#a9b4ca;
+  --accent:#6d5dfc; --cyan:#00d4ff; --ok:#20b66b; --bad:#e04d5b;
+}
+body{
+  margin:0; min-height:100vh;
+  font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
+  background:
+    radial-gradient(circle at 18% 14%, rgba(0,212,255,.12), transparent 28%),
+    radial-gradient(circle at 85% 18%, rgba(109,93,252,.17), transparent 30%),
+    linear-gradient(180deg,#050912,#09101f);
+  color:var(--text); overflow-x:hidden;
+}
+body:before{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:-2;
+  background-image:
+    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:34px 34px;
+}
+body:after{
+  content:"</>  AI  01  API  DB  { }  ☁  ⚙  🔐  🌐  1010  #";
+  position:fixed; inset:0; pointer-events:none; z-index:-1;
+  white-space:pre-wrap; padding:90px 40px; line-height:3;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:40px; letter-spacing:24px; color:rgba(103,132,255,.05);
+  transform:rotate(-9deg) scale(1.08);
+}
+.wrap{max-width:980px;margin:auto;padding:20px}
+.brand{display:flex;align-items:center;justify-content:center;gap:12px;margin:10px 0 18px}
+.logo{
+  width:50px;height:50px;border-radius:16px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--accent),var(--cyan));
+  font-size:25px;box-shadow:0 12px 35px rgba(0,212,255,.16)
+}
+.brand h1{margin:0;font-size:30px}.brand small{display:block;color:var(--muted);margin-top:3px}
+.panel{
+  background:rgba(14,22,39,.94);border:1px solid rgba(125,145,190,.18);
+  border-radius:25px;padding:24px;box-shadow:0 24px 70px rgba(0,0,0,.3);
+  backdrop-filter:blur(10px)
+}
+.start-card{max-width:680px;margin:auto;text-align:center}
+.tech-chips{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:18px 0 24px}
+.chip{padding:7px 11px;border-radius:999px;background:#14213a;border:1px solid #26385c;color:#c8d6f2;font-size:13px}
+.field{margin:18px 0;text-align:right}.field label{display:block;margin-bottom:8px;font-weight:850}
+.field input{
+  width:100%;min-height:52px;border-radius:15px;border:1px solid #2c3c60;
+  background:#0e1526;color:#fff;padding:0 15px;font:inherit;font-size:16px;outline:none
+}
+.field input:focus{border-color:#6d5dfc;box-shadow:0 0 0 3px rgba(109,93,252,.16)}
+.primary,.secondary,.answer{border:0;border-radius:16px;font:inherit;font-weight:900;cursor:pointer}
+.primary{min-height:52px;padding:0 24px;background:linear-gradient(135deg,var(--accent),#8267ff);color:white}
+.secondary{min-height:48px;padding:0 18px;background:#1a2742;color:#dce6fa;border:1px solid #304466}
+.primary:disabled,.secondary:disabled{opacity:.55;cursor:not-allowed}
+.primary:active,.secondary:active,.answer:active{transform:scale(.99)}
+.hint{color:var(--muted);font-size:14px;line-height:1.8}
+.status{margin-top:12px;min-height:24px;font-size:14px;font-weight:800;color:#9eefff}
+.status.bad{color:#ff9aa4}.hidden{display:none!important}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.badge{background:#17223b;border:1px solid #29395a;border-radius:999px;padding:8px 12px;font-weight:900}
+.player-badge{color:#bfeaff}.timer{font-size:21px;font-weight:1000}
+.progress{height:10px;background:#1b2540;border-radius:999px;overflow:hidden;margin:14px 0 8px}
+.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),var(--accent));width:0;transition:width .2s ease}
+.emoji{text-align:center;font-size:76px;padding:24px 0 8px;letter-spacing:9px;filter:drop-shadow(0 10px 28px rgba(0,212,255,.14))}
+.question{text-align:center;font-size:23px;font-weight:1000;margin:4px 0 19px}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.answer{min-height:76px;padding:14px 16px;color:#fff;font-size:17px;background:#18233b;border:1px solid #2a3b61;transition:.12s ease}
+.answer:hover{background:#1e2c49}.answer.correct{background:var(--ok);border-color:#39cf84}.answer.wrong{background:var(--bad);border-color:#f26470}.answer:disabled{cursor:default}
+.result{text-align:center;min-height:29px;margin-top:13px;font-size:18px;font-weight:1000}
+.scoreline{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:11px;color:#d9e3f7;font-weight:850}
+.controls{text-align:center;margin-top:18px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.final{text-align:center}.cup{font-size:82px}.bigscore{font-size:50px;font-weight:1000;color:#7de8ff}.final-name{font-size:22px;font-weight:900}
+.rank-banner{
+  margin:18px auto 8px;max-width:540px;padding:16px 18px;border-radius:18px;
+  background:linear-gradient(135deg,#162847,#1d1b4a);border:1px solid #334e83;
+  font-size:20px;font-weight:1000
+}
+.leaderboard-wrap{margin-top:26px;text-align:right}
+.leaderboard-title{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.leaderboard-title h3{margin:0;font-size:23px}
+.podium{display:grid;grid-template-columns:1fr 1.16fr 1fr;gap:12px;align-items:end;margin:20px 0 24px}
+.podium-card{text-align:center;background:#141e34;border:1px solid #2a3d64;border-radius:20px;padding:16px 10px;min-width:0}
+.podium-card.first{padding-top:27px;padding-bottom:27px;background:linear-gradient(180deg,rgba(255,202,40,.18),#151e33);border-color:rgba(255,213,77,.6);transform:translateY(-8px)}
+.podium-card.second{background:linear-gradient(180deg,rgba(202,211,224,.14),#151e33)}
+.podium-card.third{background:linear-gradient(180deg,rgba(205,127,50,.15),#151e33)}
+.medal{font-size:42px}.podium-name{font-size:18px;font-weight:1000;margin-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.podium-score{color:#91e9ff;font-weight:950;margin-top:5px}
+.table-shell{border:1px solid #273a5e;border-radius:18px;overflow:hidden;background:#0e1728}
+.table-head,.leader-row{display:grid;grid-template-columns:72px minmax(0,1fr) 120px;gap:8px;align-items:center;padding:12px 14px}
+.table-head{background:#17233b;color:#9fb1d0;font-size:13px;font-weight:900}
+.leader-row{border-top:1px solid #202f4d}.leader-row.current{background:rgba(0,212,255,.08);outline:1px solid rgba(0,212,255,.22)}
+.pos{font-weight:1000;color:#bfd0ee}.name{font-weight:850;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.points{text-align:left;font-weight:1000;color:#7de8ff}
+.scroll-list{max-height:560px;overflow:auto}.empty{padding:24px;text-align:center;color:#9eabc3}
+.start-leader{margin-top:20px;padding-top:18px;border-top:1px solid #243550}
+.start-leader .mini{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:10px}
+.mini-rank{background:#111b2f;border:1px solid #263b60;border-radius:13px;padding:8px 11px;font-size:13px}
+.live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#2bdc80;margin-left:6px;box-shadow:0 0 12px #2bdc80}
+.note{margin-top:16px;padding:12px 14px;border-radius:14px;background:#101a2e;border:1px dashed #2e456e;color:#aebbd4;font-size:13px;line-height:1.7}
+@media(max-width:600px){
+  .wrap{padding:12px}.panel{padding:17px}.answers{grid-template-columns:1fr}.emoji{font-size:58px}.question{font-size:20px}.brand h1{font-size:24px}
+  .podium{gap:7px}.podium-card{padding:12px 6px}.podium-card.first{padding-top:18px;padding-bottom:18px}.medal{font-size:32px}.podium-name{font-size:14px}.podium-score{font-size:13px}
+  .table-head,.leader-row{grid-template-columns:56px minmax(0,1fr) 88px;padding:11px 9px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">
+    <div class="logo">⚡</div>
+    <div><h1>تحدي الإيموجي التقني</h1><small>سرعة + معرفة + نقاط</small></div>
+  </div>
+
+  <section id="startScreen" class="panel start-card">
+    <h2>ادخل باسمك وابدأ 🚀</h2>
+    <p class="hint">نتيجتك تدخل مباشرة في لوحة الترتيب المشتركة لجميع اللاعبين.</p>
+    <div class="tech-chips">
+      <span class="chip">🔐 أمن سيبراني</span><span class="chip">🌐 شبكات</span>
+      <span class="chip">🤖 ذكاء اصطناعي</span><span class="chip">📊 بيانات</span><span class="chip">☁️ سحابة</span>
+    </div>
+    <div class="field">
+      <label for="playerName">اسم اللاعب</label>
+      <input id="playerName" maxlength="24" autocomplete="name" placeholder="مثال: يوسف">
+    </div>
+    <button id="startBtn" class="primary">دخول التحدي</button>
+    <div id="nameError" class="result"></div>
+    <div id="firebaseStatus" class="status">جاري الاتصال بلوحة النتائج...</div>
+    <div class="start-leader">
+      <strong><span class="live-dot"></span> أفضل اللاعبين الآن</strong>
+      <div id="startTopThree" class="mini"><span class="hint">جاري التحميل...</span></div>
+    </div>
+  </section>
+
+  <section id="gameScreen" class="panel hidden">
+    <div class="top">
+      <span id="playerBadge" class="badge player-badge">👤 اللاعب</span>
+      <span id="questionCount" class="badge">السؤال 1 من 15</span>
+      <span id="timer" class="timer">⏱️ 15</span>
+    </div>
+    <div class="progress"><span id="progressBar"></span></div>
+    <div id="emojiBox" class="emoji"></div>
+    <div id="questionText" class="question"></div>
+    <div id="answersBox" class="answers"></div>
+    <div id="resultText" class="result"></div>
+    <div class="scoreline"><span id="scoreText">النقاط: 0</span><span id="streakText">سلسلة صحيحة: 0 🔥</span></div>
+    <div class="controls"><button id="nextBtn" class="primary hidden">السؤال التالي</button></div>
+  </section>
+
+  <section id="finalScreen" class="panel final hidden">
+    <div class="cup">🏆</div>
+    <h2>انتهى التحدي!</h2>
+    <div id="finalName" class="final-name"></div>
+    <div>مجموع نقاطك</div>
+    <div id="finalScore" class="bigscore">0</div>
+    <div id="rankBanner" class="rank-banner">جاري حساب مركزك...</div>
+    <p id="finalMessage"></p>
+    <div id="saveStatus" class="status"></div>
+    <div class="controls">
+      <button id="restartBtn" class="primary">لاعب جديد</button>
+      <button id="refreshBtn" class="secondary">تحديث الترتيب</button>
+    </div>
+    <div class="leaderboard-wrap">
+      <div class="leaderboard-title">
+        <h3>🏅 لوحة الترتيب المشتركة</h3>
+        <span id="playerCount" class="badge">0 لاعب</span>
+      </div>
+      <div id="podium" class="podium"></div>
+      <div class="table-shell">
+        <div class="table-head"><div>المركز</div><div>الاسم</div><div style="text-align:left">النقاط</div></div>
+        <div id="leaderList" class="scroll-list"></div>
+      </div>
+    </div>
+    <div class="note">تُعرض أعلى 400 نتيجة في لوحة الترتيب. النقاط تعتمد على صحة الإجابة وسرعتها.</div>
+  </section>
+</div>
+
+<script>
+const DB_URL="https://tech-emoji-challenge-default-rtdb.asia-southeast1.firebasedatabase.app";
+const RESULTS_PATH="/techEmojiChallenge/results";
+const MAX_PLAYERS=400;
+
+const questions=[
+{e:'🔒🛡️💻',q:'ما المجال التقني الذي تمثله هذه الإيموجيات؟',a:['الأمن السيبراني','تحليل البيانات','تصميم المواقع','قواعد البيانات'],correct:'الأمن السيبراني'},
+{e:'🌐🔗📡',q:'ما المجال الأقرب لهذه الإيموجيات؟',a:['الشبكات','البرمجة','الذكاء الاصطناعي','التصميم'],correct:'الشبكات'},
+{e:'☁️📁💾',q:'ماذا تمثل هذه الإيموجيات؟',a:['التخزين السحابي','الأمن السيبراني','الطباعة','الروبوتات'],correct:'التخزين السحابي'},
+{e:'🤖🧠✨',q:'ما المجال التقني المقصود؟',a:['الذكاء الاصطناعي','الشبكات','قواعد البيانات','الدعم الفني'],correct:'الذكاء الاصطناعي'},
+{e:'📊📈🔍',q:'ما التخصص الذي تشير إليه الإيموجيات؟',a:['تحليل البيانات','الأمن السيبراني','الهندسة','الشبكات'],correct:'تحليل البيانات'},
+{e:'🗄️💾📚',q:'أي مصطلح تقني تمثله الإيموجيات؟',a:['قواعد البيانات','الحوسبة السحابية','تصميم الألعاب','الواقع الافتراضي'],correct:'قواعد البيانات'},
+{e:'👨‍💻⌨️🧩',q:'ما المجال التقني المقصود؟',a:['البرمجة','الشبكات','التصميم الجرافيكي','الصيانة'],correct:'البرمجة'},
+{e:'🎨🖥️🖱️',q:'ما المجال الأقرب لهذه الإيموجيات؟',a:['تصميم الواجهات','قواعد البيانات','الأمن السيبراني','الشبكات'],correct:'تصميم الواجهات'},
+{e:'📱🛠️✨',q:'ماذا تمثل هذه الإيموجيات غالبًا؟',a:['تطوير تطبيقات الجوال','تحليل البيانات','الخوادم','الشبكات'],correct:'تطوير تطبيقات الجوال'},
+{e:'🌍🖥️🔗',q:'ما المصطلح التقني الأقرب؟',a:['الويب','البلوتوث','الطباعة ثلاثية الأبعاد','الروبوتات'],correct:'الويب'},
+{e:'🖥️🧰🔧',q:'ما المجال الذي تمثله هذه الإيموجيات؟',a:['الدعم الفني','الذكاء الاصطناعي','تحليل البيانات','البرمجة'],correct:'الدعم الفني'},
+{e:'📶📱🔵',q:'أي تقنية تمثلها هذه الإيموجيات؟',a:['البلوتوث','قواعد البيانات','البرمجة','التخزين السحابي'],correct:'البلوتوث'},
+{e:'🧑‍💻🎮🕹️',q:'ما المجال التقني المقصود؟',a:['تطوير الألعاب','الشبكات','الأمن السيبراني','الحوسبة السحابية'],correct:'تطوير الألعاب'},
+{e:'🥽🌐✨',q:'ما التقنية التي تشير إليها الإيموجيات؟',a:['الواقع الافتراضي','تحليل البيانات','قواعد البيانات','الدعم الفني'],correct:'الواقع الافتراضي'},
+{e:'🏠💡📱',q:'ما المصطلح الأقرب لهذه الإيموجيات؟',a:['إنترنت الأشياء','الشبكات التقليدية','تصميم المواقع','قواعد البيانات'],correct:'إنترنت الأشياء'}
+];
+
+let playerName='',index=0,score=0,streak=0,timeLeft=15,timerId=null,answered=false,currentEntryId=null,gameStartedAt=0;
+const $=id=>document.getElementById(id);
+
+function shuffled(arr){const out=[...arr];for(let i=out.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[out[i],out[j]]=[out[j],out[i]]}return out}
+function sortBoard(board){return board.sort((a,b)=>(b.score||0)-(a.score||0) || (a.duration||0)-(b.duration||0) || (a.createdAt||0)-(b.createdAt||0))}
+
+async function fetchBoard(){
+  const res=await fetch(DB_URL+RESULTS_PATH+".json",{cache:"no-store"});
+  if(!res.ok) throw new Error("read");
+  const data=await res.json();
+  if(!data) return [];
+  return Object.entries(data).map(([id,v])=>({id,...v})).filter(x=>x && typeof x.score==="number");
+}
+async function saveResult(entry){
+  const res=await fetch(DB_URL+RESULTS_PATH+".json",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify(entry)
+  });
+  if(!res.ok) throw new Error("write");
+  const data=await res.json();
+  return data.name;
+}
+async function getTop400(){
+  const board=sortBoard(await fetchBoard());
+  return board.slice(0,MAX_PLAYERS);
+}
+async function refreshStartTop(){
+  try{
+    const board=await getTop400();
+    $('firebaseStatus').textContent=`متصل ✅ — ${board.length} نتيجة في الترتيب`;
+    $('firebaseStatus').classList.remove('bad');
+    const box=$('startTopThree'); box.innerHTML='';
+    if(!board.length){box.innerHTML='<span class="hint">لا توجد نتائج بعد — كن أول لاعب! 🚀</span>';return}
+    ['🥇','🥈','🥉'].forEach((m,i)=>{
+      if(!board[i]) return;
+      const span=document.createElement('span'); span.className='mini-rank';
+      span.textContent=`${m} ${board[i].name} — ${board[i].score}`; box.appendChild(span);
+    });
+  }catch(e){
+    $('firebaseStatus').textContent='تعذر الاتصال بالنتائج. تأكد من الإنترنت وقواعد Firebase.';
+    $('firebaseStatus').classList.add('bad');
+    $('startTopThree').innerHTML='<span class="hint">تعذر تحميل الترتيب.</span>';
+  }
+}
+
+async function startGame(){
+  playerName=$('playerName').value.trim();
+  if(!playerName){$('nameError').textContent='اكتب اسمك أولًا 👤';$('playerName').focus();return}
+  $('nameError').textContent='';
+  try{
+    const board=await fetchBoard();
+    if(board.length>=MAX_PLAYERS){
+      $('nameError').textContent='اكتمل عدد المشاركين (400 لاعب).';
+      return;
+    }
+  }catch(e){
+    $('nameError').textContent='تعذر الاتصال بـ Firebase. تأكد من الإنترنت.';
+    return;
+  }
+  index=0;score=0;streak=0;currentEntryId=null;gameStartedAt=Date.now();
+  $('playerBadge').textContent='👤 '+playerName;
+  $('startScreen').classList.add('hidden');$('finalScreen').classList.add('hidden');$('gameScreen').classList.remove('hidden');
+  renderQuestion();
+}
+
+function renderQuestion(){
+  clearInterval(timerId);answered=false;timeLeft=15;
+  const item=questions[index];
+  $('questionCount').textContent=`السؤال ${index+1} من ${questions.length}`;
+  $('timer').textContent=`⏱️ ${timeLeft}`;
+  $('progressBar').style.width=`${(index/questions.length)*100}%`;
+  $('emojiBox').textContent=item.e;$('questionText').textContent=item.q;$('resultText').textContent='';
+  $('scoreText').textContent=`النقاط: ${score}`;$('streakText').textContent=`سلسلة صحيحة: ${streak} 🔥`;$('nextBtn').classList.add('hidden');
+  const box=$('answersBox');box.innerHTML='';
+  shuffled(item.a).forEach(text=>{
+    const btn=document.createElement('button');btn.type='button';btn.className='answer';btn.textContent=text;btn.dataset.value=text;
+    btn.addEventListener('click',()=>choose(text,btn));box.appendChild(btn);
+  });
+  timerId=setInterval(()=>{timeLeft--;$('timer').textContent=`⏱️ ${timeLeft}`;if(timeLeft<=0){clearInterval(timerId);if(!answered)timeout()}},1000);
+}
+function lock(){document.querySelectorAll('.answer').forEach(b=>b.disabled=true)}
+function markCorrect(v){document.querySelectorAll('.answer').forEach(b=>{if(b.dataset.value===v)b.classList.add('correct')})}
+function choose(value,btn){
+  if(answered)return;answered=true;clearInterval(timerId);lock();
+  const item=questions[index];markCorrect(item.correct);
+  if(value===item.correct){
+    const gained=Math.max(300,Math.round(1000*(timeLeft/15)));score+=gained;streak++;btn.classList.add('correct');
+    $('resultText').textContent=`✅ صحيح! +${gained} نقطة`;
+  }else{streak=0;btn.classList.add('wrong');$('resultText').textContent='❌ إجابة غير صحيحة'}
+  $('scoreText').textContent=`النقاط: ${score}`;$('streakText').textContent=`سلسلة صحيحة: ${streak} 🔥`;$('nextBtn').classList.remove('hidden');
+}
+function timeout(){
+  answered=true;streak=0;lock();markCorrect(questions[index].correct);$('resultText').textContent='⏰ انتهى الوقت!';
+  $('streakText').textContent='سلسلة صحيحة: 0 🔥';$('nextBtn').classList.remove('hidden');
+}
+function nextQuestion(){if(index<questions.length-1){index++;renderQuestion()}else finish()}
+
+function podiumCard(player,place){
+  const medals={1:'🥇',2:'🥈',3:'🥉'},classes={1:'first',2:'second',3:'third'};
+  const div=document.createElement('div');div.className='podium-card '+classes[place];
+  const medal=document.createElement('div');medal.className='medal';medal.textContent=medals[place];
+  const name=document.createElement('div');name.className='podium-name';name.textContent=player?player.name:'—';
+  const sc=document.createElement('div');sc.className='podium-score';sc.textContent=player?(player.score+' نقطة'):'0 نقطة';
+  div.append(medal,name,sc);return div;
+}
+function renderLeaderboard(board){
+  board=sortBoard(board).slice(0,MAX_PLAYERS);
+  $('playerCount').textContent=`${board.length} لاعب`;
+  const podium=$('podium');podium.innerHTML='';
+  podium.appendChild(podiumCard(board[1],2));podium.appendChild(podiumCard(board[0],1));podium.appendChild(podiumCard(board[2],3));
+  const list=$('leaderList');list.innerHTML='';
+  if(!board.length){list.innerHTML='<div class="empty">لا توجد نتائج بعد.</div>';return}
+  board.forEach((p,i)=>{
+    const row=document.createElement('div');row.className='leader-row'+(p.id===currentEntryId?' current':'');
+    const pos=document.createElement('div');pos.className='pos';pos.textContent='#'+(i+1);
+    const name=document.createElement('div');name.className='name';name.textContent=p.name+(p.id===currentEntryId?' ← أنت':'');
+    const pts=document.createElement('div');pts.className='points';pts.textContent=p.score;
+    row.append(pos,name,pts);list.appendChild(row);
+  });
+  const myIndex=board.findIndex(p=>p.id===currentEntryId);
+  $('rankBanner').textContent=myIndex>=0?`🎯 مركزك الحالي: #${myIndex+1} من ${board.length}`:'نتيجتك محفوظة، لكنها خارج أعلى 400.';
+}
+
+async function updateLeaderboard(){
+  try{
+    const board=await getTop400();renderLeaderboard(board);$('saveStatus').textContent='تم تحديث الترتيب ✅';$('saveStatus').classList.remove('bad');
+  }catch(e){$('saveStatus').textContent='تعذر تحديث الترتيب.';$('saveStatus').classList.add('bad')}
+}
+
+async function finish(){
+  clearInterval(timerId);$('gameScreen').classList.add('hidden');$('finalScreen').classList.remove('hidden');
+  $('finalName').textContent='👤 '+playerName;$('finalScore').textContent=score;$('rankBanner').textContent='جاري حفظ نتيجتك وحساب مركزك...';
+  const ratio=score/(questions.length*1000);
+  $('finalMessage').textContent=ratio>.75?'🔥 رهيب! واضح إنك تقني محترف.':ratio>.5?'👏 ممتاز! مستواك التقني قوي.':ratio>.25?'👍 حلو! عندك أساس تقني جيد.':'💡 جرّب مرة ثانية وارفع نقاطك!';
+  $('saveStatus').textContent='جاري الحفظ في Firebase...';$('saveStatus').classList.remove('bad');
+  try{
+    const entry={name:playerName,score:score,duration:Math.max(1,Date.now()-gameStartedAt),createdAt:Date.now()};
+    currentEntryId=await saveResult(entry);
+    const board=await getTop400();
+    renderLeaderboard(board);
+    $('saveStatus').textContent='تم حفظ نتيجتك في لوحة الترتيب المشتركة ✅';
+  }catch(e){
+    $('rankBanner').textContent='تعذر حفظ النتيجة.';
+    $('saveStatus').textContent='خطأ في الاتصال بـ Firebase. تأكد من Rules والإنترنت.';
+    $('saveStatus').classList.add('bad');
+  }
+}
+
+$('startBtn').addEventListener('click',startGame);
+$('nextBtn').addEventListener('click',nextQuestion);
+$('refreshBtn').addEventListener('click',updateLeaderboard);
+$('restartBtn').addEventListener('click',()=>{
+  $('finalScreen').classList.add('hidden');$('startScreen').classList.remove('hidden');$('playerName').value='';$('playerName').focus();refreshStartTop();
+});
+$('playerName').addEventListener('keydown',e=>{if(e.key==='Enter')startGame()});
+refreshStartTop();
+</script>
+</body>
+</html>
