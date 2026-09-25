@@ -3,3 +3,6 @@
 .hero{background:linear-gradient(90deg,rgba(18,62,45,.88),rgba(26,82,56,.38)),url('assets/hero.jpg') center/cover no-repeat}
 .pic{font-size:0;background-position:center;background-size:cover;background-repeat:no-repeat}
 .pic.reading{background-image:url('assets/reading.jpg')}.pic.art{background-image:url('assets/art.jpg')}.pic.garden{background-image:url('assets/garden.jpg')}.pic.games{background-image:url('assets/games.jpg')}
+
+/* direct image rendering */
+.hero{position:relative;overflow:hidden;background:#164f3c!important}.hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(18,62,45,.82),rgba(26,82,56,.22));z-index:1}.hero>div{position:relative;z-index:2}.pic{overflow:hidden;background:none!important}.pic img{display:block;width:100%;height:100%;object-fit:cover}
