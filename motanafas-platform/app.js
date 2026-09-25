@@ -1,0 +1,1 @@
+const ADMIN_EMAIL="ragged603@gmail.com";document.addEventListener("DOMContentLoaded",()=>{document.body.insertAdjacentHTML("beforeend","<!-- Firebase-connected Motanafas platform -->")});
