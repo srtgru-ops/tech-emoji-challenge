@@ -76,3 +76,40 @@ header .topNav,header nav{display:none!important}
 .photoHero{height:610px;position:relative;overflow:hidden;background:#173f31}.photoHeroMedia{position:absolute;inset:0;background:url('images/hero-new.jpg') center/cover no-repeat}.photoHeroShade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(12,53,40,.08) 0%,rgba(12,53,40,.18) 38%,rgba(12,53,40,.88) 100%)}.photoHeroCopy{position:absolute;z-index:3;right:7%;top:50%;transform:translateY(-50%);width:min(520px,44%);color:#fff}.photoHeroCopy>span{display:inline-block;background:#f8f4e9;color:#176b50;border-radius:30px;padding:8px 14px;font-size:11px;font-weight:800;margin-bottom:15px}.photoHeroCopy h1{font-size:62px;line-height:1;margin:0 0 12px;color:#fff}.photoHeroCopy h2{font-size:38px;line-height:1.25;margin:0 0 17px;color:#fff}.photoHeroCopy p{font-size:14px;line-height:2;color:#f4f7f5;max-width:470px}.photoHeroCopy>div{display:flex;gap:10px;margin-top:24px}.photoGhost{display:inline-flex;align-items:center;padding:12px 22px;border:1px solid #fff;border-radius:25px;color:#fff;text-decoration:none;font-size:12px;font-weight:800}.homeQuick{display:grid;grid-template-columns:repeat(3,1fr);max-width:1160px;margin:-35px auto 0;position:relative;z-index:6;background:#fff;border-radius:14px;box-shadow:0 15px 40px #173f3115;overflow:hidden}.homeQuick a{padding:24px 27px;text-decoration:none;border-left:1px solid #e4ebe5;color:#173f31}.homeQuick a:last-child{border:0}.homeQuick b,.homeQuick span{display:block}.homeQuick b{font-size:16px;color:#0d6849}.homeQuick span{font-size:10px;color:#71827c;margin-top:7px}.homeQuick a:hover{background:#f3f8f2}
 @media(max-width:850px){.photoHero{height:570px}.photoHeroShade{background:linear-gradient(0deg,rgba(12,53,40,.92) 0%,rgba(12,53,40,.42) 56%,rgba(12,53,40,.05) 100%)}.photoHeroCopy{right:6%;left:6%;bottom:38px;top:auto;transform:none;width:auto}.photoHeroCopy>span{font-size:10px}.photoHeroCopy h1{font-size:45px}.photoHeroCopy h2{font-size:29px}.photoHeroCopy p{font-size:12px;line-height:1.8}.homeQuick{margin:0;border-radius:0;box-shadow:none;border-bottom:1px solid #e2eae3}.homeQuick a{padding:18px 12px}.homeQuick b{font-size:13px}.homeQuick span{font-size:9px}}
 @media(max-width:540px){.photoHero{height:535px}.photoHeroMedia{background-position:center center}.photoHeroCopy{bottom:28px}.photoHeroCopy h1{font-size:40px}.photoHeroCopy h2{font-size:26px}.photoHeroCopy>div{margin-top:18px}.photoHeroCopy .btn,.photoGhost{padding:11px 15px;font-size:11px}.homeQuick{grid-template-columns:1fr}.homeQuick a{border-left:0;border-bottom:1px solid #e4ebe5;padding:14px 6%}.homeQuick a:last-child{border:0}}
+
+
+/* Motanafas homepage completion — clean responsive hero */
+.homeHeader{max-width:none}
+.photoHero{min-height:610px;height:min(70vw,650px);max-height:650px}
+.photoHeroMedia{background-image:url('images/hero-new.jpg'),linear-gradient(135deg,#dcebd8,#f2dfb8)}
+.photoHeroCopy{padding:34px 36px;border-radius:24px;background:linear-gradient(135deg,rgba(13,74,54,.86),rgba(13,74,54,.58));backdrop-filter:blur(7px);box-shadow:0 22px 60px rgba(15,55,43,.2)}
+.photoHeroCopy h1{font-weight:800;letter-spacing:-2px}
+.photoHeroCopy h2{font-weight:800}
+.homeQuick{border:1px solid #e2ebe4}
+.homeQuick a{transition:.2s ease}
+@media(max-width:850px){
+ .homeHeader{justify-content:space-between!important}
+ .homeHeader .brand{margin:0!important;order:1}
+ .headerActions{order:2}
+ .photoHero{height:520px;min-height:520px}
+ .photoHeroCopy{right:5%;left:5%;bottom:24px;padding:25px 23px;border-radius:20px}
+ .photoHeroCopy h1{font-size:43px!important}
+ .photoHeroCopy h2{font-size:27px!important}
+ .photoHeroCopy p{margin-bottom:0}
+ .homeQuick{grid-template-columns:repeat(3,1fr);margin:0 4%;transform:translateY(-14px);border-radius:14px;box-shadow:0 14px 34px rgba(23,63,49,.1)}
+ .homeQuick a{border-bottom:0!important;text-align:center;padding:16px 8px}
+}
+@media(max-width:540px){
+ .photoHero{height:500px;min-height:500px}
+ .photoHeroCopy{bottom:20px}
+ .photoHeroCopy>span{margin-bottom:10px}
+ .photoHeroCopy h1{font-size:38px!important;margin-bottom:8px}
+ .photoHeroCopy h2{font-size:24px!important}
+ .photoHeroCopy p{font-size:11px!important}
+ .photoHeroCopy>div{display:grid;grid-template-columns:1fr 1fr}
+ .photoHeroCopy .btn,.photoGhost{justify-content:center;text-align:center}
+ .homeQuick{grid-template-columns:repeat(3,1fr)!important;margin:0 3%;transform:translateY(-12px)}
+ .homeQuick a{padding:13px 5px!important}
+ .homeQuick b{font-size:12px}
+ .homeQuick span{font-size:8px}
+}
