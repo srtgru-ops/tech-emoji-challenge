@@ -4,12 +4,14 @@ service cloud.firestore {
     function signedIn() { return request.auth != null; }
     function isAdmin() {
       return signedIn() &&
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
 
     match /users/{userId} {
       allow create: if signedIn() && request.auth.uid == userId && request.resource.data.role == 'parent';
-      allow read, update: if signedIn() && (request.auth.uid == userId || isAdmin());
+      allow read: if signedIn() && (request.auth.uid == userId || isAdmin());
+      allow update: if signedIn() && (isAdmin() || (request.auth.uid == userId && resource.data.role == 'parent' && request.resource.data.role == resource.data.role));
       allow delete: if isAdmin();
     }
 
