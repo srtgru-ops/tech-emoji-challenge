@@ -1,0 +1,36 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function isAdmin() {
+      return signedIn() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    match /users/{userId} {
+      allow create: if signedIn() && request.auth.uid == userId && request.resource.data.role == 'parent';
+      allow read, update: if signedIn() && (request.auth.uid == userId || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    match /children/{childId} {
+      allow create: if signedIn() && request.resource.data.parentId == request.auth.uid;
+      allow read, update, delete: if signedIn() && (resource.data.parentId == request.auth.uid || isAdmin());
+    }
+
+    match /workshops/{workshopId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /bookings/{bookingId} {
+      allow create: if signedIn() && request.resource.data.parentId == request.auth.uid;
+      allow read, update, delete: if signedIn() && (resource.data.parentId == request.auth.uid || isAdmin());
+    }
+
+    match /feedback/{feedbackId} {
+      allow create: if request.resource.data.userId == null || (signedIn() && request.resource.data.userId == request.auth.uid);
+      allow read, update, delete: if isAdmin();
+    }
+  }
+}
