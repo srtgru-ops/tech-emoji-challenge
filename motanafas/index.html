@@ -15,6 +15,22 @@
   #home .actions{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important}
   #home .actions a{text-align:center!important;padding:12px 8px!important}
 }
+</style><style id="mobile-hero-hardfix">
+@media(max-width:950px){
+#home.premiumHero{display:block!important;min-height:0!important;background:#f6f3e8!important}
+#home .visualScene{display:none!important;height:0!important;min-height:0!important}
+#home .heroText{display:block!important;padding:52px 7% 56px!important;text-align:right!important;background:linear-gradient(145deg,#f7f3e7,#eef5eb)!important}
+#home .heroText:before{content:"متنفّس";display:inline-block;background:#123f32;color:white;padding:7px 14px;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:20px}
+#home h1{font-size:48px!important;line-height:1.08!important;margin:0 0 18px!important}
+#home h1 small{font-size:24px!important;line-height:1.55!important}
+}
+@media(max-width:540px){
+#home .heroText{padding:42px 7% 46px!important}
+#home h1{font-size:42px!important}
+#home h1 small{font-size:22px!important}
+#home .actions{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important}
+#home .actions a{text-align:center!important;padding:12px 8px!important}
+}
 </style></head><body>
 <header><a class='brand' href='#home'><span class='logo-lockup' aria-label='متنفس'><svg class='leaf-logo' viewBox='0 0 52 44' aria-hidden='true'><path d='M8 31C9 18 17 9 31 6c0 12-7 23-20 27 7 0 14-2 21-8-4 10-12 15-24 14z'/><path d='M30 22c5-8 11-12 18-12-1 8-6 14-16 16z'/></svg><b>متنفّس</b></span></a><nav><a href='#home'>الرئيسية</a><a href='#activities'>الأنشطة</a><a href='#parks'>الحدائق</a><a href='#events'>الفعاليات</a><a href='#about'>من نحن</a><a href='#feedback'>رأيك يهمنا</a><a href='#contact'>تواصل معنا</a></nav><button class='login' onclick="openModal('loginModal')">تسجيل الدخول</button></header>
 <main>
